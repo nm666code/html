@@ -1,0 +1,391 @@
+<html>
+<meta charset="utf-8">
+<title>求三個整數的最大公因數</title>
+<body bgcolor=#78FFFF>
+<h1>求三個整數的最大公因數(greatest common divisor, GCD)</h1>
+[<a href="#m2">method-2</a>][<a href='#m3'>method-3</a>][<a href=#m4>method-4</a>]<br>
+<a name="m1">
+<p>解題方法1: <font color=red>Brute force</font>  (流程圖、虛擬碼) </p>
+<p>流程圖:</p>
+<img src=bruteforce.png>
+
+
+<p>虛擬碼:</p>
+<pre>
+<ol>
+	<li>輸入n1 n2 n3</li>
+	<li>let result  = function gcd(gcd(n1,n2),n3)</li>
+	<li>function gcd(n,m)</li>
+	<li>	let i = 2,gcd = 1</li>
+	<li>	while(i小於n,m)</li>
+	<li>		if(i整除n,m)</li>
+	<li>			gcd = i</li>
+	<li>		i++</li>
+	<li>	end while</li>
+	<li>	return gcd</li>
+	<li>close function</li>
+	<li>print result</li>
+</ol>
+</pre>
+
+<p>source codes for Brute force</p>
+<pre>
+<code>
+&lt;html&gt;
+&lt;meta charset="utf-8"&gt;
+&lt;script&gt;
+var n1,n2,n3;
+
+function gcddriver(){
+	
+	var ref1=document.getElementById('n1');
+	var ref2=document.getElementById('n2');
+	var ref3=document.getElementById('n3');
+	var ref4=document.getElementById('output');
+	
+	n1 = ref1.value;
+	n2 = ref2.value;
+	n3 = ref3.value;
+	
+	var result = gcd(gcd(n1,n2),n3);
+	ref4.innerHTML = ref4.innerHTML+
+		"&lt;font size=3&gt; "
+			+"GCD("+n1+","+n2+","+n3+")="+result+
+		"&lt;/font&gt;"+"&lt;br&gt;";
+}
+
+function gcd(m,n){
+	var ref4 =document.getElementById('output');
+	var gcd=1,i=2;
+
+	while (i&lt;=m && i&lt;=n) {
+		if (m%i==0 && n%i==0){
+			gcd=i;
+			ref4.innerHTML = ref4.innerHTML+
+				"&lt;font size=3&gt; "
+					+m+" and "+n+"能被"+i+"整除,so目前gcd改為"+gcd+
+				"&lt;/font&gt;"+"&lt;br&gt;";
+		}
+		i++;
+	}
+	return gcd;
+}
+&lt;/script&gt;
+&lt;body&gt;
+input n1
+&lt;input type=text id='n1'&gt;&lt;br&gt;
+input n2
+&lt;input type=text id='n2'&gt;&lt;br&gt;
+input n3
+&lt;input type=text id='n3'&gt;&lt;br&gt;
+&lt;button onclick='gcddriver();'&gt;run gcd&lt;/button&gt;&lt;br&gt;
+&lt;p id='output'&gt;&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code>
+</pre>
+
+
+<p>執行情形 for Brute force:</p>
+<iframe src=Brute_force.html width=300 height=200></iframe>
+
+<hr>
+[<a href=#m1>method-1</a>][<a href=#m3>method-3</a>][<a href=#m4>method-4</a>]<br>
+
+<a name="m2">
+<p>解題方法2: 輾轉相減法 <p>
+<p>流程圖:</p>
+<img src=輾轉相減法.png>
+
+
+
+<p>虛擬碼:</p>
+<pre>
+<ol>
+	<li>輸入n1 n2 n3</li>
+	<li>let result  = function gcd(gcd(n1,n2),n3)</li>
+	<li>function gcd(n,m)</li>
+	<li>	while(m!=n)</li>
+	<li>		while(m>n)</li>
+	<li>			m=m-n;</li>
+	<li>		end while</li>
+	<li>		while(m&lt;n)</li>
+	<li>			n=n-m;</li>
+	<li>		end while</li>
+	<li>	end while</li>
+	<li>	return m</li>
+	<li>close function</li>
+	<li>print result</li>
+</ol>
+</pre>
+
+<p>source codes:</p>
+<pre>
+<code>
+&lt;html&gt;
+&lt;meta charset="utf-8"&gt;
+&lt;script&gt;
+var n1,n2,n3;
+
+function gcddriver(){
+	
+	var ref1=document.getElementById('n1');
+	var ref2=document.getElementById('n2');
+	var ref3=document.getElementById('n3');
+	var ref4=document.getElementById('output');
+	
+	n1 = ref1.value;
+	n2 = ref2.value;
+	n3 = ref3.value;
+	
+	var result = gcd(gcd(n1,n2),n3);
+	ref4.innerHTML = ref4.innerHTML+
+		"&lt;font size=3&gt; "
+			+"GCD("+n1+","+n2+","+n3+")="+result+
+		"&lt;/font&gt;"+"&lt;br&gt;";
+}
+
+function gcd(m,n){
+
+	var ref4 =document.getElementById('output');
+	m = parseInt(m);//不轉型可能被當字串
+	n = parseInt(n);
+	
+	while (m!=n){
+		while(m&gt;n){
+			ref4.innerHTML = ref4.innerHTML+
+			"&lt;font size=3&gt; "
+				+m+" &gt; "+n+",so令m為m-n ="+(m-n)+
+			"&lt;/font&gt;"+"&lt;br&gt;";
+			m=m-n;
+		}
+		while(m&lt;n){
+			ref4.innerHTML = ref4.innerHTML+
+			"&lt;font size=3&gt; "
+				+m+" &lt; "+n+",so令n為n-m ="+(n-m)+
+			"&lt;/font&gt;"+"&lt;br&gt;";
+			n=n-m;
+		}
+    }
+    return (m);
+}
+&lt;/script&gt;
+&lt;body&gt;
+input n1
+&lt;input type=text id='n1'&gt;&lt;br&gt;
+input n2
+&lt;input type=text id='n2'&gt;&lt;br&gt;
+input n3
+&lt;input type=text id='n3'&gt;&lt;br&gt;
+&lt;button onclick='gcddriver();'&gt;run gcd&lt;/button&gt;&lt;br&gt;
+&lt;p id='output'&gt;&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code>
+</pre>
+
+<p>執行情形:</p>
+<iframe src=輾轉相減法.html width=300 height=200></iframe>
+
+<hr>
+[<a href=#m1>method-1</a>][<a href=#m2>method-2</a>][<a href=#m4>method-4</a>]<br>
+
+<a name="m3">
+<p>解題方法3: 輾轉相除法 : loop  (流程圖、虛擬碼)<p>
+<p>流程圖:</p>
+<img src=輾轉相除法loop.png>
+
+
+
+<p>虛擬碼:</p>
+<pre>
+<ol>
+	<li>輸入n1 n2 n3</li>
+	<li>let result  = function gcd(gcd(n1,n2),n3)</li>
+	<li>function gcd(n,m)</li>
+	<li>	if (m&lt;n)</li>
+	<li>		m,n互換</li>
+	<li>	while (n!=0)</li>
+	<li>		n=n-m;</li>
+	<li>	end while<li>
+	<li>	return m<li>
+	<li>close function<li>
+	<li>print result</li>
+</ol>
+</pre>
+
+<p>source codes:</p>
+<pre>
+<code>
+&lt;html&gt;
+&lt;meta charset="utf-8"&gt;
+&lt;script&gt;
+var n1,n2,n3;
+
+function gcddriver(){
+	
+	var ref1=document.getElementById('n1');
+	var ref2=document.getElementById('n2');
+	var ref3=document.getElementById('n3');
+	var ref4=document.getElementById('output');
+	
+	n1 = ref1.value;
+	n2 = ref2.value;
+	n3 = ref3.value;
+	
+	var result = gcd(gcd(n1,n2),n3);
+	ref4.innerHTML = ref4.innerHTML+
+		"&lt;font size=3&gt; "
+			+"GCD("+n1+","+n2+","+n3+")="+result+
+		"&lt;/font&gt;"+"&lt;br&gt;";
+}
+
+function gcd(m,n){
+
+	var ref4 =document.getElementById('output');
+	var t;
+	m = parseInt(m);//不轉型可能被當字串
+	n = parseInt(n);
+
+	if (m&lt;n){
+		ref4.innerHTML = ref4.innerHTML+
+			"&lt;font size=3&gt; "
+				+"m &lt; n,&nbsp;so m,n互換 m = "+n+" n = "+m+
+			"&lt;/font&gt;"+"&lt;br&gt;";
+		t=m;m=n;n=t;
+	}
+	
+	while (n!=0){
+		ref4.innerHTML = ref4.innerHTML+
+			"&lt;font size=3&gt; "
+				+"m = "+m+" n = "+n+" 令m = n = "+n+", 令n = m%n ="+m%n+
+			"&lt;/font&gt;"+"&lt;br&gt;";
+		t=m%n; m=n; n=t;
+    }
+
+	return (m);
+}
+&lt;/script&gt;
+&lt;body&gt;
+input n1
+&lt;input type=text id='n1'&gt;&lt;br&gt;
+input n2
+&lt;input type=text id='n2'&gt;&lt;br&gt;
+input n3
+&lt;input type=text id='n3'&gt;&lt;br&gt;
+&lt;button onclick='gcddriver();'&gt;run gcd&lt;/button&gt;&lt;br&gt;
+&lt;p id='output'&gt;&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code>
+</pre>
+
+
+<p>執行情形:</p>
+<iframe src=輾轉相除法loop.html width=300 height=200></iframe>
+
+<hr>
+[<a href=#m1>method-1</a>][<a href=#m2>method-2</a>][<a href=#m3>method-3</a>]<br>
+
+<a name="m4">
+<p>解題方法4: 輾轉相除法 :  recursive (流程圖、虛擬碼)</p>
+<p>流程圖:</p>
+<img src=輾轉相除法recursive.png>
+
+
+
+<p>虛擬碼:</p>
+<pre>
+<ol>
+	<li>輸入n1 n2 n3</li>
+	<li>let result  = function gcd(gcd(n1,n2),n3)</li>
+	<li>function gcd(n,m)</li>
+	<li>	if (m&lt;n)</li>
+	<li>		m,n互換</li>
+	<li>	if (n整除m)</li>
+	<li>		return n</li>
+	<li>	else<li>
+	<li>		return (gcd(n,m%n))<li>
+	<li>close function<li>
+	<li>print result</li>
+</ol>
+</pre>
+
+
+<p>source codes:</p>
+<pre>
+<code>
+&lt;html&gt;
+&lt;meta charset="utf-8"&gt;
+&lt;script&gt;
+var n1,n2,n3;
+
+function gcddriver(){
+	
+	var ref1=document.getElementById('n1');
+	var ref2=document.getElementById('n2');
+	var ref3=document.getElementById('n3');
+	var ref4=document.getElementById('output');
+	
+	n1 = ref1.value;
+	n2 = ref2.value;
+	n3 = ref3.value;
+	
+	var result = gcd(gcd(n1,n2),n3);
+	ref4.innerHTML = ref4.innerHTML+
+		"&lt;font size=3&gt; "
+			+"GCD("+n1+","+n2+","+n3+")="+result+
+		"&lt;/font&gt;"+"&lt;br&gt;";
+}
+
+function gcd(m,n){
+
+	var ref4 =document.getElementById('output');
+	var temp;
+	m = parseInt(m);//不轉型可能被當字串
+	n = parseInt(n);
+
+	if (m&lt;n){
+		ref4.innerHTML = ref4.innerHTML+
+			"&lt;font size=3&gt; "
+				+"m &lt; n,&nbsp;so m, n互換 m = "+n+" n = "+m+
+			"&lt;/font&gt;"+"&lt;br&gt;";
+		t=m;m=n;n=t;
+	}
+
+	if (m%n==0){ 
+		ref4.innerHTML = ref4.innerHTML+
+			"&lt;font size=3&gt; "
+				+"m = "+m+" n = "+n+" m%n==0 gcd 為 "+n+
+			"&lt;/font&gt;"+"&lt;br&gt;";
+		return (n);
+	}
+	
+	else{
+		ref4.innerHTML = ref4.innerHTML+
+			"&lt;font size=3&gt; "
+				+"m = "+m+" n = "+n+" m%n!=0 令m 為 n, n 為 m%n"+
+			"&lt;/font&gt;"+"&lt;br&gt;";
+		return (gcd(n,m%n));
+	}
+}
+&lt;/script&gt;
+&lt;body&gt;
+input n1
+&lt;input type=text id='n1'&gt;&lt;br&gt;
+input n2
+&lt;input type=text id='n2'&gt;&lt;br&gt;
+input n3
+&lt;input type=text id='n3'&gt;&lt;br&gt;
+&lt;button onclick='gcddriver();'&gt;run gcd&lt;/button&gt;&lt;br&gt;
+&lt;p id='output'&gt;&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code>
+</pre>
+
+<p>執行情形:</p>
+<iframe src=輾轉相除法recursive.html width=300 height=200></iframe>
+
+
+</body>

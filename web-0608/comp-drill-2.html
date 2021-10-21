@@ -1,0 +1,71 @@
+<html>
+<script>
+var n1, n2, score=0, msg, sign='+',cans, error='', img;//global
+
+function rsign1(){
+ var kind=Math.floor(Math.random()*4);
+ var sgnarray=['+','-','*','/'];
+ sign=sgnarray[kind];
+}
+function genpr(){
+ n1=Math.floor(Math.random()*21);
+ n2=Math.floor(Math.random()*21);
+ if((sign == '-' || sign == '/') && n1 < n2){
+	var temp = n1; n1 = n2; n2 = temp;
+ }
+ while(sign == '/' && n2 == 0){
+	n2=Math.floor(Math.random()*21);
+ }
+ if(sign == '/' && n1 % n2 != 0){
+	n1 = Math.floor(n1 / n2) * n2;
+ }
+ var ref1=document.getElementById('q1');
+ ref1.innerHTML=n1+sign+n2;
+}
+function check(){
+ var ref2=document.getElementById('reply');
+ var uans=ref2.value;
+ //var uans=document.getElementById('reply').value;
+ if (calculateAns(n1,n2,uans)) {msg="correct!";score+=5;img = "圈.jpg";}
+ else {msg="Incorrect!";error=error+"<br>"+n1+sign+n2+"=";img = "叉.jpg";}
+ var ref3=document.getElementById('fb1');
+ ref3.innerHTML=msg+"Scores:"+score+"<img src="+img+">";
+ document.getElementById('wrong1').innerHTML=error;
+ rsign1();
+ genpr();
+ document.getElementById('reply').value='';
+}
+function calculateAns(n1, n2, uans){
+	switch (sign){
+		case '+':
+			if(n1+n2==uans)
+				return true;
+			break;
+		case '-':
+			if(n1-n2==uans)
+				return true;
+			break;
+		case '*':
+			if(n1*n2==uans)
+				return true;
+			break;
+		case '/':
+			if(n1/n2==uans)
+				return true;
+			break;
+	}
+}
+//CSS
+</script>
+<body onload='rsign1();genpr();'>
+<font size=5>
+<p ><span id='q1'>??+??</span>=
+<input type=text id='reply' style='color:blue;font-size:.2in;font-weight:bold;'>
+<button onclick='check();'>check</button><br>
+<p id='fb1'> </p>
+error:<hr>
+<p id='wrong1'> ????</p>
+</p>
+</font>
+</body>
+</html>

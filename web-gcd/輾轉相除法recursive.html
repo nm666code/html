@@ -1,0 +1,66 @@
+<html>
+<meta charset="utf-8">
+<script>
+var n1,n2,n3;
+
+function gcddriver(){
+	
+	var ref1=document.getElementById('n1');
+	var ref2=document.getElementById('n2');
+	var ref3=document.getElementById('n3');
+	var ref4=document.getElementById('output');
+	
+	n1 = ref1.value;
+	n2 = ref2.value;
+	n3 = ref3.value;
+	
+	var result = gcd(gcd(n1,n2),n3);
+	ref4.innerHTML = ref4.innerHTML+
+		"<font size=3> "
+			+"GCD("+n1+","+n2+","+n3+")="+result+
+		"</font>"+"<br>";
+}
+
+function gcd(m,n){
+
+	var ref4 =document.getElementById('output');
+	var temp;
+	m = parseInt(m);//不轉型可能被當字串
+	n = parseInt(n);
+
+	if (m<n){
+		ref4.innerHTML = ref4.innerHTML+
+			"<font size=3> "
+				+"m &lt; n,&nbsp;so m, n互換 m = "+n+" n = "+m+
+			"</font>"+"<br>";
+		t=m;m=n;n=t;
+	}
+
+	if (m%n==0){ 
+		ref4.innerHTML = ref4.innerHTML+
+			"<font size=3> "
+				+"m = "+m+" n = "+n+" m%n==0 gcd 為 "+n+
+			"</font>"+"<br>";
+		return (n);
+	}
+	
+	else{
+		ref4.innerHTML = ref4.innerHTML+
+			"<font size=3> "
+				+"m = "+m+" n = "+n+" m%n!=0 令m 為 n, n 為 m%n"+
+			"</font>"+"<br>";
+		return (gcd(n,m%n));
+	}
+}
+</script>
+<body>
+input n1
+<input type=text id='n1'><br>
+input n2
+<input type=text id='n2'><br>
+input n3
+<input type=text id='n3'><br>
+<button onclick='gcddriver();'>run gcd</button><br>
+<p id='output'></p>
+</body>
+</html>

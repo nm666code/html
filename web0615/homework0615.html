@@ -1,0 +1,88 @@
+<html>
+<title>HTML quiz</title>
+<body>
+<h1>HTML quiz</h1>
+<hr>
+<script>
+var sc = 0;
+function correct(){
+	var ref = document.getElementById("judge");
+	var ref1 = document.getElementById("score");
+	var ref2 = document.getElementById("image");
+	sc += 5;
+	ref.innerHTML = "correct";
+	ref1.innerHTML = sc;
+	ref2.innerHTML = "<img src = 圈.jpg>";
+}
+function incorrect(){
+	var ref = document.getElementById("judge");
+	var ref1 = document.getElementById("image");
+	ref.innerHTML = "incorrect";
+	ref1.innerHTML = "<img src = 叉.jpg>";
+}
+function cloze(id,realAns){
+	var ref1 = document.getElementById(id);
+	if (ref1.value.toLowerCase() == realAns.toLowerCase()){
+		correct();
+		ref1.disabled=true;
+	}
+	else
+		incorrect();
+}
+</script>
+<font>html&lt;br&gt;換行
+<button onclick = "correct();disabled=true;">O</button>
+<button onclick = "incorrect();disabled=true;">X</button><br>
+
+<font>html&lt;hr&gt;換行
+<button onclick = "incorrect();disabled=true;">O
+<button onclick = "correct();disabled=true;">X</button></button><br>
+
+<font>html&lt;img src = 圖檔名&gt;顯示圖片
+<button onclick = "correct();disabled=true;">O</button>
+<button onclick = "incorrect();disabled=true;">X</button><br>
+
+<font>html區分大小寫
+<button onclick = "incorrect();disabled=true;">O
+<button onclick = "correct();disabled=true;">X</button></button><br>
+
+<font>javascript區分大小寫
+<button onclick = "correct();disabled=true;">O</button>
+<button onclick = "incorrect();disabled=true;">X</button><br>
+
+<font>html單引號等同於雙引號
+<button onclick = "correct();disabled=true;">O</button>
+<button onclick = "incorrect();disabled=true;">X</button><br>
+
+<font>html&amp;nbsp是不換行空格
+<button onclick = "correct();disabled=true;">O</button>
+<button onclick = "incorrect();disabled=true;">X</button><br>
+
+<font>html&lt;a href=web1.html&gt;是連結連到web1.html
+<button onclick = "correct();disabled=true;">O</button>
+<button onclick = "incorrect();disabled=true;">X</button><br>
+
+<font>下列何者不是html直譯器
+<input type = radio name = "q1" onclick = "incorrect();disabled=true;">chrome
+<input type = radio name = "q1" onclick = "incorrect();disabled=true;">edge
+<input type = radio name = "q1" onclick = "incorrect();disabled=true;">firefox
+<input type = radio name = "q1" onclick = "correct();disabled=true;">notepad++<br>
+
+<font>以下哪種格式的影像可以表現動態畫面？
+<input type = radio name = "q2" onclick = "incorrect();disabled=true;">JPG
+<input type = radio name = "q2" onclick = "incorrect();disabled=true;">PNG
+<input type = radio name = "q2" onclick = "incorrect();disabled=true;">TIF
+<input type = radio name = "q2" onclick = "correct();disabled=true;">GIF<br>
+
+<font>HTML全名為:
+<input type=text id='reply1' onchange="cloze(this.id,'Hypertext Markup Language')"><br>
+
+<font>javascript的Math物件中哪一個方法可以回傳無條件捨去:
+<input type=text id='reply2' onchange="cloze(this.id,'floor')"><br>
+
+<p id = "judge"></p>
+<p>score: <span id = "score"></span></p>
+<p id = "image"></p>
+</body>
+</html>
+

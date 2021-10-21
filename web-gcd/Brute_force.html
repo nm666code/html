@@ -1,0 +1,51 @@
+<html>
+<meta charset="utf-8">
+<script>
+var n1,n2,n3;
+
+function gcddriver(){
+	
+	var ref1=document.getElementById('n1');
+	var ref2=document.getElementById('n2');
+	var ref3=document.getElementById('n3');
+	var ref4=document.getElementById('output');
+	
+	n1 = ref1.value;
+	n2 = ref2.value;
+	n3 = ref3.value;
+	
+	var result = gcd(gcd(n1,n2),n3);
+	ref4.innerHTML = ref4.innerHTML+
+		"<font size=3> "
+			+"GCD("+n1+","+n2+","+n3+")="+result+
+		"</font>"+"<br>";
+}
+
+function gcd(m,n){
+	var ref4 =document.getElementById('output');
+	var gcd=1,i=2;
+
+	while (i<=m && i<=n) {
+		if (m%i==0 && n%i==0){
+			gcd=i;
+			ref4.innerHTML = ref4.innerHTML+
+				"<font size=3> "
+					+m+" and "+n+"能被"+i+"整除,so目前gcd改為"+gcd+
+				"</font>"+"<br>";
+		}
+		i++;
+	}
+	return gcd;
+}
+</script>
+<body>
+input n1
+<input type=text id='n1'><br>
+input n2
+<input type=text id='n2'><br>
+input n3
+<input type=text id='n3'><br>
+<button onclick='gcddriver();'>run gcd</button><br>
+<p id='output'></p>
+</body>
+</html>
