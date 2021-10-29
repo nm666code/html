@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset = "utf-8"></meta>
+<script>
+	var n1, n2, score=0, msg, record = "", img, cardinal_num, sec = 0, timerid;
+	function genNum(max){
+		cardinal_num = max;
+		n1=Math.floor(Math.random() * (max));
+		n2=Math.floor(Math.random() * (max));
+		if(n1 < n2){
+			var temp = n1; n1 = n2; n2 = temp;
+		}
+		var ref1=document.getElementById('q1');
+		ref1.innerHTML = n1+" - "+n2 + "=";
+	}
+	
+	function check(){
+		var userAns = document.getElementById('userIn').value;
+		userAns = parseInt(userAns);
+		if (userAns == n1 - n2) {
+			msg = "Correct!";
+			score += 5;
+			img = "correct.gif";
+		}
+		else {
+			msg = "Incorrect!";
+			record = record + "<br>" + n1 + ' - ' + n2 + " = ";
+			img = "wrong.gif";
+		}
+		var ref3=document.getElementById('feedback');
+		ref3.innerHTML = msg + " Scores: " + score + "<img src=" + img +" height = '200'>";
+		
+		genNum(cardinal_num);
+		document.getElementById('userIn').value='';
+	}
+	
+	function showWrong(){
+		document.getElementById('wrong1').innerHTML = record;
+	}
+	
+	function start(){
+		//timeoutIDwindow.setInterval(( () =>{sec++;alert(sec+"Hello!");} ), 5000);
+		sec = 0;
+		timerid = window.setInterval("showTime();", 1000);
+	}
+	
+	function stop(){
+		window.clearInterval(timerid);
+		document.getElementById('userIn').disabled = "disabled";
+		document.getElementById('ckbt').disabled = "disabled";
+	}
+	
+	function showTime(){
+		sec++;
+		document.getElementById('cnt').innerHTML = sec + "s";
+		if(sec == 30)
+			stop();
+	}
+	
+	function search(ele) {
+		if(event.key === 'Enter')
+			check();    
+	}
+</script>
+</head>
+<body>
+	<font size = 5>
+		<input type = radio name = "q1" onclick = "genNum(10); start();">個位數
+		<input type = radio name = "q1" onclick = "genNum(100); start();">十位數
+		<input type = radio name = "q1" onclick = "genNum(1000); start();">百位數<br>
+	</font>
+	<font size = 15>
+		<span id='q1'>?? + ?? = </span>
+		<input type=text id='userIn' style='font-size:.4in;' onkeydown="search(this)"/>
+		<button onclick='check();'  id='ckbt' style="width:150px;height:50px;font-size:20px;">check</button><br>
+		<p id='cnt'></p>
+		<p id='feedback'> </p>
+		Wrong answer record:
+		<button onclick='showWrong();' style="width:150px;height:50px;font-size:20px;">check</button>
+		<hr>
+		<p id='wrong1'></p>
+	</font>
+</body>
+</html>
