@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset = "utf-8"></meta>
+<title>ShowPic</title>
+<script>
+	var speed, direction;
+	var speeds, directions;
+	var pics = new Array("pic/1.png","pic/2.png","pic/3.png","pic/4.png","pic/5.png");
+	var indexL = 0, indexM = 1, indexR = 2;
+	var timerid;
+	
+	function init(){
+		directions = document.getElementsByName("direction");
+		if(directions[0].checked)
+			direction = 'left';
+		else
+			direction = 'right';
+		
+		speeds = document.getElementsByName("speed");
+		if(speeds[0].checked)
+			speed = 500;
+		else if(speeds[1].checked)
+			speed = 2000;
+		else
+			speed = 4000;
+	}
+	
+	function drift(){
+		if(direction == "left"){
+			indexL = indexM;
+			indexM = indexR;
+			indexR = (indexR + 1 >= pics.length)? 0: indexR + 1;
+		}
+		else{
+			indexR = indexM;
+			indexM = indexL;
+			indexL = (indexR - 1 < 0)? pics.length - 1: indexL - 1;
+		}
+	}
+	
+	function showPic(){
+		drift();
+		document.getElementById("picL").src = pics[indexL];
+		document.getElementById("picM").src = pics[indexM];
+		document.getElementById("picR").src = pics[indexR];
+	}
+	
+	function start(){
+		window.clearInterval(timerid);
+		init();
+		init();
+		timerid = window.setInterval("showPic();", speed);
+	}
+	
+	function stop(){
+		window.clearInterval(timerid);
+	}
+</script>
+</head>
+<body>
+	<div style="text-align:center;"><font size = 15><b>冰崩冰崩</b></font></div>
+	<hr>
+	<font size = 5>
+		<table style="width:100%">	
+			<tr>
+				<td>
+					<img id="picL" src = "pic/1.png" width = 600>
+				</td>
+				<td>
+					<img id="picM" src = "pic/2.png" width = 600>
+				</td>
+				<td>
+					<img id="picR" src = "pic/3.png" width = 600>
+				</td>
+			</tr>
+		</table>
+		speed:
+		<input type = radio name = "speed" checked>快
+		<input type = radio name = "speed">中
+		<input type = radio name = "speed">慢<br>
+		
+		direction:
+		<input type = radio name = "direction" checked>左
+		<input type = radio name = "direction">右<br>
+		
+		<button onclick='start();'style="width:150px;height:50px;font-size:20px;">run</button>
+		<button onclick='stop();'style="width:150px;height:50px;font-size:20px;">stop</button><br>
+	</font>
+</body>
+</html>
