@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset = "utf-8"></meta>
+<title>Javascript</title>
+<script>
+var role =localStorage.getItem("role");
+var id = localStorage.getItem('id');
+var pswd = localStorage.getItem('pswd');
+var sc = localStorage.getItem('sc');
+var img;
+function init(){
+	if(role == 'Red'){
+		img = "<img src = img/Red.png>";
+	}
+	else{
+		img = "<img src = img/Blue.png>";
+	}
+	var ref = document.getElementById("content");
+	ref.innerHTML = "<font size = 20 color='blue'>your charater<br>"+img+"<br>your id: "+ id +"<br>your password: "+ pswd +"<br>your score: "+ sc; 
+}
+
+
+</script>
+</head>
+<body onload = "init()" bgcolor=#f5f5dc>
+<p align="center" id = 'content'><p>
+</body>
+</html>
