@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset = "utf-8"></meta>
+<title>IF</title>
+<script>
+</script>
+</head>
+<body onload="init()">
+<font size =12>
+a = <input type="number" style="height: 40px;font-size:20px;" value=0 id='a'> 
+b = <input type="number" style="height: 40px;font-size:20px;" value=0 id='b'> 
+c = <input type="number" style="height: 40px;font-size:20px;" value=0 id='c'><br> 
+<table align="center" width=100% border = 3px cellpadding=9px>
+<td>
+<p>
+<ol>
+<li name="pse">input a b c</li>
+<li name="pse">if(a>b)</li>
+<li name="pse">swap a b</li>
+<li name="pse">if(b>c)</li>
+<li name="pse">swap b c</li>
+<li name="pse">print c</li>
+</ol>
+</p>
+</td>
+<td>
+<p>
+<ol>
+<li name="cpp">cin>>a>>b>>c;</li>
+<li name="cpp">if(a>b)</li>
+<li name="cpp">swap(a,b);</li>
+<li name="cpp">if(b>c)</li>
+<li name="cpp">swap(b,c);</li>
+<li name="cpp"> cout&lt;&lt;c&lt;&lt;endl;</li>
+</ol>
+</p>
+</td>
+<td>
+<canvas id="canvas1" width="500" height="600">
+This text is displayed if your browser does not support HTML5 Canvas.
+</canvas>
+</td>
+</table>
+</font>
+<button onclick='auto();' style="width:150px;height:50px;font-size:20px;">auto</button>
+<button onclick='next();' style="width:150px;height:50px;font-size:20px;">next</button>
+<button onclick='clear();' style="width:150px;height:50px;font-size:20px;">clear</button><br>
+<script>
+var a, b, c;
+var timerid;
+var para=0;
+var isAuto=false;
+var canvas1 = document.getElementById("canvas1");
+var ctx = canvas1.getContext("2d");
+var posY = [0,80,210,290,420,500];
+function init(){
+	a=document.getElementById('a').value;
+	b=document.getElementById('b').value;
+	c=document.getElementById('c').value;
+	ctx.beginPath();
+	ctx.rect(100,0,200,50);//rect1
+	ctx.font = "20px 標楷體";
+	ctx.fillText("cin>>a>>b>>c;",140,30);
+	ctx.moveTo(200,50);//line1
+	ctx.lineTo(200,80);
+	ctx.moveTo(190,70);
+	ctx.lineTo(200,80);
+	ctx.moveTo(210,70);
+	ctx.lineTo(200,80);
+	ctx.moveTo(200,80);//diam1
+	ctx.lineTo(150,130);
+	ctx.lineTo(200,180);
+	ctx.lineTo(250,130);
+	ctx.lineTo(200,80);
+	ctx.fillText("if(a>b)",167,137);
+	ctx.moveTo(200,180);//line2 yes
+	ctx.lineTo(200,210);
+	ctx.lineTo(190,200);
+	ctx.moveTo(200,210);
+	ctx.lineTo(210,200);
+	ctx.fillText("yes",220,190);
+	ctx.moveTo(250,130);//line2 no
+	ctx.lineTo(350,130);
+	ctx.lineTo(350,275);
+	ctx.lineTo(200,275);
+	ctx.fillText("no",275,120);
+	ctx.rect(100,210,200,50);//rect2
+	ctx.fillText("swap(a,b);",140,240);
+	ctx.moveTo(200,260);//line3
+	ctx.lineTo(200,290);
+	ctx.lineTo(190,280);
+	ctx.moveTo(200,290);
+	ctx.lineTo(210,280);
+	ctx.moveTo(200,290);//diam2
+	ctx.lineTo(150,340);
+	ctx.lineTo(200,390);
+	ctx.lineTo(250,340);
+	ctx.lineTo(200,290);
+	ctx.fillText("if(b>c)",167,347);
+	ctx.moveTo(200,390);//line4 yes
+	ctx.lineTo(200,420);
+	ctx.lineTo(190,410);
+	ctx.moveTo(200,420);
+	ctx.lineTo(210,410);
+	ctx.fillText("yes",220,400);
+	ctx.moveTo(250,340);//line4 no
+	ctx.lineTo(350,340);
+	ctx.lineTo(350,485);
+	ctx.lineTo(200,485);
+	ctx.fillText("no",275,330);
+	ctx.rect(100,420,200,50);//rect3
+	ctx.fillText("swap(a,b);",140,450);
+	ctx.moveTo(200,470);//line5
+	ctx.lineTo(200,500);
+	ctx.lineTo(190,490);
+	ctx.moveTo(200,500);
+	ctx.lineTo(210,490);
+	ctx.rect(100,500,200,50);//rec4
+	ctx.fillText("cout<<c<<endl;",140,530);
+	ctx.closePath();
+	ctx.stroke();
+}
+
+function paint(n){
+	ctx.fillStyle = 'yellow';
+	if(n!=1&&n!=3&&n<6){
+		
+	}
+}
+
+function auto(){
+	if(!isAuto)
+		start();
+	else
+		stop();
+}
+
+function start(){
+	window.clearInterval(timerid);
+	timerid = window.setInterval("next();", speed);
+}
+	
+function stop(){
+	window.clearInterval(timerid);
+}
+
+function next(){
+	var pses=document.getElementsByName('pse');
+	var cpps=document.getElementsByName('cpp');
+	for(var i=0;i<6;i++){
+		pses[i].style="background-color:white;"
+		cpps[i].style="background-color:white;"
+	}
+	pses[para].style="background-color:yellow;"
+	cpps[para].style="background-color:yellow;"
+	if(para<5)
+		para++;
+	if(para==4&&b<=c)
+		para=5;
+	if(para==2&&a<=b)
+		para=3;
+}
+</script>
+</body>
+</html>
