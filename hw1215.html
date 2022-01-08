@@ -45,7 +45,7 @@ This text is displayed if your browser does not support HTML5 Canvas.
 </font>
 <button onclick='auto();' style="width:150px;height:50px;font-size:20px;">auto</button>
 <button onclick='next();' style="width:150px;height:50px;font-size:20px;">next</button>
-<button onclick='clear();' style="width:150px;height:50px;font-size:20px;">clear</button><br>
+<button onclick='clearAll();' style="width:150px;height:50px;font-size:20px;">clear</button><br>
 <script>
 var a, b, c;
 var timerid;
@@ -53,27 +53,89 @@ var para=0;
 var isAuto=false;
 var canvas1 = document.getElementById("canvas1");
 var ctx = canvas1.getContext("2d");
-var posY = [0,80,210,290,420,500];
+var blockPos = [0,80,210,290,420,500];
+var words = ["cin>>a>>b>>c;","if(a>b)","swap(a,b);","if(b>c)","swap(b,c);","cout<<c<<endl;"];
+var wordPos = [30,137,240,347,450,530];
+var pses=document.getElementsByName('pse');
+var cpps=document.getElementsByName('cpp');
+var speed = 1000;
 function init(){
-	a=document.getElementById('a').value;
-	b=document.getElementById('b').value;
-	c=document.getElementById('c').value;
-	ctx.beginPath();
-	ctx.rect(100,0,200,50);//rect1
+	drawLine();
+	for(var i = 0; i < 6; i++)
+		clear(i);
+}
+
+function clear(n){
 	ctx.font = "20px 標楷體";
-	ctx.fillText("cin>>a>>b>>c;",140,30);
+	if(n!=1&&n!=3&&n<6){
+		ctx.clearRect(101, blockPos[n]+1, 198,48);
+		ctx.rect(100, blockPos[n], 200, 50);
+		ctx.fillStyle = 'black';
+		ctx.fillText(words[n], 140, wordPos[n]);
+	}
+	else if(n==1){
+		ctx.fillStyle = 'white';
+		ctx.beginPath();
+		ctx.moveTo(200, 81);
+		ctx.lineTo(149, 130);
+		ctx.lineTo(200, 179);
+		ctx.lineTo(249, 130);
+		ctx.lineTo(200, 81);
+		ctx.closePath();
+		ctx.fill();
+		ctx.beginPath();
+		ctx.moveTo(200,80);//diam1
+		ctx.lineTo(150,130);
+		ctx.lineTo(200,180);
+		ctx.lineTo(250,130);
+		ctx.lineTo(200,80);
+		ctx.closePath();
+		ctx.fillStyle = 'black';
+		ctx.fillText(words[n], 167, wordPos[n]);
+	}
+	else if(n==3){
+		ctx.fillStyle = 'white';
+		ctx.beginPath();
+		ctx.moveTo(200, 291);
+		ctx.lineTo(149, 340);
+		ctx.lineTo(200, 389);
+		ctx.lineTo(249, 340);
+		ctx.lineTo(200, 291);
+		ctx.closePath();
+		ctx.fill();
+		ctx.beginPath();
+		ctx.moveTo(200,290);//diam2
+		ctx.lineTo(150,340);
+		ctx.lineTo(200,390);
+		ctx.lineTo(250,340);
+		ctx.lineTo(200,290);
+		ctx.closePath();
+		ctx.fillStyle = 'black';
+		ctx.fillText(words[n], 167, wordPos[n]);
+	}
+	ctx.stroke();
+}
+
+function clearAll(){
+	for(var i=0;i<6;i++){
+		pses[i].style="background-color:white;"
+		cpps[i].style="background-color:white;"
+		clear(i);
+	}
+	if(isAuto)
+		stop();
+	para = 0;
+}
+
+function drawLine(){
+	ctx.font = "20px 標楷體";
+	ctx.beginPath();
 	ctx.moveTo(200,50);//line1
 	ctx.lineTo(200,80);
 	ctx.moveTo(190,70);
 	ctx.lineTo(200,80);
 	ctx.moveTo(210,70);
 	ctx.lineTo(200,80);
-	ctx.moveTo(200,80);//diam1
-	ctx.lineTo(150,130);
-	ctx.lineTo(200,180);
-	ctx.lineTo(250,130);
-	ctx.lineTo(200,80);
-	ctx.fillText("if(a>b)",167,137);
 	ctx.moveTo(200,180);//line2 yes
 	ctx.lineTo(200,210);
 	ctx.lineTo(190,200);
@@ -85,19 +147,11 @@ function init(){
 	ctx.lineTo(350,275);
 	ctx.lineTo(200,275);
 	ctx.fillText("no",275,120);
-	ctx.rect(100,210,200,50);//rect2
-	ctx.fillText("swap(a,b);",140,240);
 	ctx.moveTo(200,260);//line3
 	ctx.lineTo(200,290);
 	ctx.lineTo(190,280);
 	ctx.moveTo(200,290);
 	ctx.lineTo(210,280);
-	ctx.moveTo(200,290);//diam2
-	ctx.lineTo(150,340);
-	ctx.lineTo(200,390);
-	ctx.lineTo(250,340);
-	ctx.lineTo(200,290);
-	ctx.fillText("if(b>c)",167,347);
 	ctx.moveTo(200,390);//line4 yes
 	ctx.lineTo(200,420);
 	ctx.lineTo(190,410);
@@ -109,15 +163,11 @@ function init(){
 	ctx.lineTo(350,485);
 	ctx.lineTo(200,485);
 	ctx.fillText("no",275,330);
-	ctx.rect(100,420,200,50);//rect3
-	ctx.fillText("swap(a,b);",140,450);
 	ctx.moveTo(200,470);//line5
 	ctx.lineTo(200,500);
 	ctx.lineTo(190,490);
 	ctx.moveTo(200,500);
 	ctx.lineTo(210,490);
-	ctx.rect(100,500,200,50);//rec4
-	ctx.fillText("cout<<c<<endl;",140,530);
 	ctx.closePath();
 	ctx.stroke();
 }
@@ -125,7 +175,33 @@ function init(){
 function paint(n){
 	ctx.fillStyle = 'yellow';
 	if(n!=1&&n!=3&&n<6){
-		
+		ctx.fillRect(100, blockPos[n], 200, 50);
+		ctx.fillStyle = 'black';
+		ctx.fillText(words[n], 140, wordPos[n]);
+	}
+	else if(n==1){
+		ctx.beginPath();
+		ctx.moveTo(200,80);//diam1
+		ctx.lineTo(150,130);
+		ctx.lineTo(200,180);
+		ctx.lineTo(250,130);
+		ctx.lineTo(200,80);
+		ctx.closePath();
+		ctx.fill();
+		ctx.fillStyle = 'black';
+		ctx.fillText(words[n], 167, wordPos[n]);
+	}
+	else if(n==3){
+		ctx.beginPath();
+		ctx.moveTo(200,290);//diam2
+		ctx.lineTo(150,340);
+		ctx.lineTo(200,390);
+		ctx.lineTo(250,340);
+		ctx.lineTo(200,290);
+		ctx.closePath();
+		ctx.fill();
+		ctx.fillStyle = 'black';
+		ctx.fillText(words[n], 167, wordPos[n]);
 	}
 }
 
@@ -137,23 +213,38 @@ function auto(){
 }
 
 function start(){
+	isAuto = true;
 	window.clearInterval(timerid);
 	timerid = window.setInterval("next();", speed);
 }
 	
 function stop(){
+	isAuto = false;
 	window.clearInterval(timerid);
 }
 
 function next(){
-	var pses=document.getElementsByName('pse');
-	var cpps=document.getElementsByName('cpp');
+	a=parseInt(document.getElementById('a').value);
+	b=parseInt(document.getElementById('b').value);
+	c=parseInt(document.getElementById('c').value);
+	if(para==2){
+		document.getElementById('a').value=b;
+		document.getElementById('b').value=a;
+	}
+	
+	if(para==4){
+		document.getElementById('b').value=c;
+		document.getElementById('c').value=b;
+	}
+	
 	for(var i=0;i<6;i++){
 		pses[i].style="background-color:white;"
 		cpps[i].style="background-color:white;"
+		clear(i);
 	}
 	pses[para].style="background-color:yellow;"
 	cpps[para].style="background-color:yellow;"
+	paint(para);
 	if(para<5)
 		para++;
 	if(para==4&&b<=c)
